@@ -41,7 +41,7 @@ const Setting = () => {
 
 	return (
 		<Box sx={{ maxWidth: 600, margin: '0 auto', padding: 3 }}>
-			<Typography variant="h5" gutterBottom>Настройки</Typography>
+			<Typography variant="h4" gutterBottom>Почтовая Рассылка</Typography>
 
 			<TextField
 				label="SMTP Server"
@@ -93,6 +93,8 @@ const Setting = () => {
 				fullWidth
 				margin="normal"
 			/>
+
+			<Typography variant="h5" mt={4} gutterBottom>Платежные реквизиты</Typography>
 			<TextField
 				label="Tron"
 				name="tron"

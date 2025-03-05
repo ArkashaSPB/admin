@@ -10,12 +10,15 @@ import {
 	TableHead,
 	TableRow,
 	Paper,
-	IconButton,
 	Collapse,
 	Button,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { CheckCircle, HourglassEmpty } from "@mui/icons-material";
+import { CircularProgress, IconButton } from "@mui/material";
+import {formatDate} from "../component/dateF.js";
+
 
 const url = import.meta.env.VITE_IMG;
 
@@ -32,8 +35,6 @@ const Orders = () => {
 			setOrdersStatus1(data.filter(order => order.status === 1));
 		});
 	};
-
-	console.log(orders)
 
 
 	useEffect(() => {
@@ -55,13 +56,12 @@ const Orders = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell />
-							<TableCell>ID</TableCell>
-							<TableCell>id: user</TableCell>
-							<TableCell>Почта</TableCell>
-							<TableCell>Цена</TableCell>
-							<TableCell>Количество</TableCell>
-							<TableCell>Дата</TableCell>
-							<TableCell>Оплата</TableCell>
+							<TableCell>OID</TableCell>
+							<TableCell>UID</TableCell>
+							<TableCell>Email</TableCell>
+							<TableCell>Итого</TableCell>
+							<TableCell>ODate</TableCell>
+							<TableCell>FDate</TableCell>
 							<TableCell>Статус</TableCell>
 						</TableRow>
 					</TableHead>
@@ -82,14 +82,14 @@ const Orders = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell />
-							<TableCell>ID</TableCell>
-							<TableCell>id: user</TableCell>
-							<TableCell>Почта</TableCell>
-							<TableCell>Цена</TableCell>
-							<TableCell>Количество</TableCell>
-							<TableCell>Дата</TableCell>
-							<TableCell>Оплата</TableCell>
+							<TableCell>OID</TableCell>
+							<TableCell>UID</TableCell>
+							<TableCell>Email</TableCell>
+							<TableCell>Итого</TableCell>
+							<TableCell>ODate</TableCell>
+							<TableCell>FDate</TableCell>
 							<TableCell>Статус</TableCell>
+
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -120,23 +120,28 @@ const OrderRow = ({ order, getOrders }) => {
 					</IconButton>
 				</TableCell>
 				<TableCell>{order.id}</TableCell>
-				<TableCell>{order.user} - {order.name}</TableCell>
+				<TableCell>{order.user} </TableCell>
 				<TableCell>{order.mail}</TableCell>
 				<TableCell>$ {order.price}</TableCell>
-				<TableCell>{order.count}</TableCell>
-				<TableCell>{new Date(order.date).toLocaleString()}</TableCell>
-				<TableCell>{order.oplata ? 'Да' : 'Нет'}</TableCell>
-				<TableCell>
+				{/*<TableCell>{order.count}</TableCell>*/}
+				<TableCell>{formatDate(order.date)}</TableCell>
+				<TableCell>{order.payment && order.payment.dateCheck && formatDate(order.payment.dateCheck)}</TableCell>
+				{/*<TableCell>{order.oplata ? 'Да' : 'Нет'}</TableCell>*/}
 					{order.status === 0 ? (
-						<Button variant="outlined" color="warning" onClick={() => statusFunc(order.id)}>
-							В процессе
-						</Button>
-					) : (
-						<Button variant="contained" onClick={() => statusFunc(order.id)}>
-							Выполнен
-						</Button>
-					)}
-				</TableCell>
+						<TableCell>
+						<IconButton  variant="outlined" color="warning" onClick={() => statusFunc(order.id)}>
+							<CheckCircle color="warning" size={20} />
+						</IconButton>
+						</TableCell>
+					) :
+
+						<TableCell>
+							<IconButton  variant="outlined" color="warning" onClick={() => statusFunc(order.id)}>
+								<CheckCircle color="success" size={20} />
+							</IconButton>
+						</TableCell>
+					}
+
 
 			</TableRow>
 
@@ -144,16 +149,14 @@ const OrderRow = ({ order, getOrders }) => {
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box margin={1}>
-
-
 							{order.payment && (
 								<Box sx={{ mb: 2, p: 2, border: "1px solid gray", borderRadius: 2 }}>
 									<Typography variant="h6">Оплата</Typography>
-									<Typography>Сумма: ${order.payment.summa}</Typography>
-									<Typography>Дата: {new Date(order.payment.date).toLocaleString()}</Typography>
-									<Typography>Статус: {order.payment.status === 1 ? "Оплачено" : "Не оплачено"}</Typography>
-									<Typography>id транзакции: {order.payment.trid }</Typography>
-
+									{/*<Typography>Сумма: ${order.payment.summa}</Typography>*/}
+									<Typography>PDate: {formatDate(order.payment.date)}</Typography>
+									<Typography>BDate: {formatDate(order.payment.dateCheck)}</Typography>
+									{/*<Typography>Статус: {order.payment.status === 1 ? "Оплачено" : "Не оплачено"}</Typography>*/}
+									<Typography>TID: {order.payment.trid }</Typography>
 								</Box>
 							)}
 
@@ -166,8 +169,9 @@ const OrderRow = ({ order, getOrders }) => {
 										<TableCell>Название</TableCell>
 										<TableCell>Категория</TableCell>
 										<TableCell>Страна</TableCell>
-										<TableCell>Цена</TableCell>
 										<TableCell>Количество</TableCell>
+										<TableCell>Цена за шт</TableCell>
+
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -176,8 +180,9 @@ const OrderRow = ({ order, getOrders }) => {
 											<TableCell>{item.title}</TableCell>
 											<TableCell>{item.catName}</TableCell>
 											<TableCell>{item.countryName}</TableCell>
-											<TableCell>${item.price}</TableCell>
 											<TableCell>{item.count}</TableCell>
+											<TableCell>${item.price}</TableCell>
+
 										</TableRow>
 									))}
 								</TableBody>

@@ -17,15 +17,12 @@ const UploadImg = ({handleChange, index = null, img = null}) => {
 			await handleUpload(selectedFile); // Автоматически загружаем файл
 		}
 	};
-
 	const handleUpload = async (file) => {
 		if (!file) {
 			alert('Выберите файл для загрузки');
 			return;
 		}
-
 		setLoading(true); // Показываем индикатор загрузки
-
 		try {
 			const response = await uploadImgAPI(file);
 			setGotovo(response.filename)
@@ -40,7 +37,6 @@ const UploadImg = ({handleChange, index = null, img = null}) => {
 
 	return (
 		<Box sx={{ textAlign: 'center', padding: 2 }}>
-
 				<>
 					<input
 						accept="image/*"
@@ -59,10 +55,6 @@ const UploadImg = ({handleChange, index = null, img = null}) => {
 						</Button>
 					</label>
 				</>
-
-
-
-
 		</Box>
 	);
 };

@@ -35,12 +35,14 @@ function App() {
   const [password, setPassword] = useState('');
 
   // Проверяем localStorage при загрузке
-  useEffect(() => {
-    const adminStatus = localStorage.getItem("admin");
-    if (adminStatus === "1") {
-      setIsAdmin(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const adminStatus = localStorage.getItem("admin");
+  //   if (adminStatus === "1") {
+  //     setIsAdmin(true);
+  //   }
+  // }, []);
+
+
 
   useEffect(() => {
     if (password === "logi1234" && password !== '') { // Задай свой пароль

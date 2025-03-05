@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
 	DarkMode,
 	Dashboard,
@@ -29,20 +29,24 @@ const menuItem = [
 	{name: "Настройки", icon: <Settings/>, path: '/'},
 	{name: "Товары", icon: <Shop/>, path: '/shop'},
 	{name: "Заказы", icon: <ShoppingCart/>, path: '/orders'},
-	{name: "Рассылка", icon: <Mail/>, path: '/email'},
+	{name: "Шаблоны письма", icon: <Mail/>, path: '/email'},
 	// {name: "Оплата", icon: <CurrencyBitcoin/>, path: '/oplata'},
-	{name: "Промо коды", icon: <LocalOfferIcon/>, path: '/promo'},
+	{name: "Промокоды", icon: <LocalOfferIcon/>, path: '/promo'},
 	{name: "Клиенты", icon: <Person2/>, path: '/users'},
 	{name: "Трон история", icon: <HistoryRounded/>, path: '/tron'},
 ]
 
 const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
-	const [openMenu, setOpenMenu] = useState(false);
 
+	const [openMenu, setOpenMenu] = useState(true);
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // определение мобильного устройства
 	const toggleTheme = () => {
 		setDarkMode((prevMode) => !prevMode);
 	};
+
+	useEffect(() => {
+		setOpenMenu(!isMobile);
+	}, [isMobile]);
 
 	const toggleDrawer = () => {
 		setOpenMenu(!openMenu);
