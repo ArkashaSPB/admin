@@ -6,7 +6,7 @@ import {
 	Person2,
 	Menu as MenuIcon,
 	MenuOpen,
-	Shop, ShoppingCart, HistoryRounded, Mail, CurrencyBitcoin, Settings
+	Shop, ShoppingCart, HistoryRounded, Mail, CurrencyBitcoin, Settings, History, Storage
 } from "@mui/icons-material";
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // <== правильный импорт
 
@@ -24,6 +24,8 @@ import {
 	Toolbar, useMediaQuery
 } from "@mui/material";
 import {Link, NavLink} from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 const menuItem = [
 	{name: "Настройки", icon: <Settings/>, path: '/'},
@@ -34,9 +36,13 @@ const menuItem = [
 	{name: "Промокоды", icon: <LocalOfferIcon/>, path: '/promo'},
 	{name: "Клиенты", icon: <Person2/>, path: '/users'},
 	{name: "Трон история", icon: <HistoryRounded/>, path: '/tron'},
+	{name: "История сайта", icon: <Storage/>, path: '/logs'},
 ]
 
 const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
+
+	const location = useLocation(); // Получаем текущий путь
+	console.log(location);
 
 	const [openMenu, setOpenMenu] = useState(true);
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // определение мобильного устройства
@@ -86,20 +92,38 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 				>
 					<Paper sx={{ marginRight: 2,  maxWidth: '100%', height: "100%" }}>
 						<MenuList>
-							{menuItem.map((item, index) =>
-								<MenuItem key={index} component={Link} to={item.path} >
+							{menuItem.map((item, index) => (
+								<MenuItem
+									key={index}
+									component={Link}
+									to={item.path}
+									sx={{
+										backgroundColor: location.pathname === item.path ? "#dcdcdc" : "transparent",
+										color: location.pathname === item.path ? "#000" : "inherit",
+										"&:hover": {
+											backgroundColor: "#e0e0e0",
+										},
+									}}
+								>
 									<ListItemIcon>{item.icon}</ListItemIcon>
-									<ListItemText sx={{
-										display: openMenu ? "block" : "none",
-										width: 120
-									}}>{item.name}</ListItemText>
+									<ListItemText
+										sx={{
+											display: openMenu ? "block" : "none",
+											width: 120,
+										}}
+									>
+										{item.name}
+									</ListItemText>
 								</MenuItem>
-							)}
+							))}
 						</MenuList>
 					</Paper>
 				</Box>
 				<Box sx={{flexGrow: 1, overflowX: 'scroll'}}>
-					{children}
+
+						{children}
+					<Box sx={{height: 100}}></Box>
+
 				</Box>
 			</Box>
 
@@ -122,7 +146,7 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 				}}
 			>
 				<Box sx={{
-					width: 250,
+
 					py: 2,
 					display: "flex",
 					flexDirection: "column",
@@ -132,26 +156,24 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 						<NavLink
 							key={index}
 							to={item.path}
-							style={({ isActive }) => ({
-								width: "100%", // Растягиваем кнопку на всю ширину
-								textAlign: "left", // Выравнивание текста слева
-								padding: "8px 16px", // Добавим немного отступов
-								marginBottom: "8px", // Отступ между кнопками
+							style={{
+								width: "100%",
+								textAlign: "left",
+								padding: "8px 16px",
+								marginBottom: "8px",
 								display: "flex",
 								justifyContent: "flex-start",
 								alignItems: "center",
-								textDecoration: "none", // Убираем подчеркивание
-								backgroundColor: isActive ? "#dcdcdc" : "transparent", // Выделение активной кнопки
-								color: isActive ? "#000" : "inherit", // Цвет текста для активной кнопки
-								"&:hover": {
-									backgroundColor: "#e0e0e0", // Цвет фона при наведении
-								},
-							})}
+								textDecoration: "none",
+								backgroundColor: location.pathname === item.path ? "#dcdcdc" : "transparent",
+								color: location.pathname === item.path ? "#000" : "inherit",
+							}}
 						>
-							<Box sx={{ marginRight: 2 }}>{item.icon}</Box> {/* Отступ между иконкой и текстом */}
+							<Box sx={{ marginRight: 2 }}>{item.icon}</Box>
 							{item.name}
 						</NavLink>
 					))}
+
 				</Box>
 			</Drawer>
 

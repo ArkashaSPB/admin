@@ -122,6 +122,11 @@ export const getSettingAPI = async () => {
 	return data
 }
 
+export const getLogAPI = async () => {
+	const {data} = await $host.get(`setting/log`)
+	return data
+}
+
 
 export const editSettingAPI = async (mas) => {
 	const {data} = await $host.post(`setting`, mas)

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { editSettingAPI, getSettingAPI } from "../api/siteAPI.js";
 import { TextField, Button, Box, Typography } from '@mui/material';
+import {toast} from "react-toastify";
 
 const Setting = () => {
 	const [setting, setSetting] = useState({
@@ -10,9 +11,11 @@ const Setting = () => {
 		smtpPass: '',
 		smtpName: '',
 		smtpTyp: '',
-		tron: ''
+		tron: '',
+		admin : ''
 	});
 
+	console.log(setting)
 
 
 	const getFunc = () => {
@@ -23,7 +26,7 @@ const Setting = () => {
 
 	const editFunc = () => {
 		editSettingAPI(setting).then(data => {
-			console.log('Updated Data:', data);
+			toast.success(data.message);
 		});
 	}
 
@@ -61,9 +64,18 @@ const Setting = () => {
 				margin="normal"
 			/>
 			<TextField
-				label="SMTP Email"
+				label="SMTP Email (Отсюда приходит почта)"
 				name="smptMail"
 				value={setting.smptMail}
+				onChange={handleChange}
+				fullWidth
+				margin="normal"
+			/>
+
+			<TextField
+				label="Почта администратора"
+				name="admin"
+				value={setting.admin}
 				onChange={handleChange}
 				fullWidth
 				margin="normal"
@@ -93,6 +105,9 @@ const Setting = () => {
 				fullWidth
 				margin="normal"
 			/>
+
+
+
 
 			<Typography variant="h5" mt={4} gutterBottom>Платежные реквизиты</Typography>
 			<TextField

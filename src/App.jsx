@@ -15,6 +15,7 @@ import TronHistory from "./pages/TronHistory.jsx";
 import OplataHistory from "./pages/OplataHistory.jsx";
 import Promo from "./pages/Promo.jsx";
 import Email from "./pages/Email.jsx";
+import Logs from "./pages/Logs.jsx";
 
 const rout = [
   { path: '/', element: <Main/> },
@@ -26,6 +27,7 @@ const rout = [
   { path: '/oplata', element: <OplataHistory /> },
   { path: '/promo', element: <Promo /> },
   { path: '/email', element: <Email /> },
+  { path: '/logs', element: <Logs /> },
 ];
 
 function App() {

@@ -9,7 +9,7 @@ const getTheme = (darkMode) => {
 				contrastText: "#fff",
 			},
 			secondary: {
-				main: "#dc004e",
+				main: "#e5e5e5",
 			},
 			background: {
 				default: darkMode ? "#121212" : "#fafafa", // Цвет фона

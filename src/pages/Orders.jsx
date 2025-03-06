@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { CheckCircle, HourglassEmpty } from "@mui/icons-material";
+import { Check } from "@mui/icons-material";
 import { CircularProgress, IconButton } from "@mui/material";
 import {formatDate} from "../component/dateF.js";
 
@@ -35,7 +35,6 @@ const Orders = () => {
 			setOrdersStatus1(data.filter(order => order.status === 1));
 		});
 	};
-
 
 	useEffect(() => {
 		getOrders();
@@ -129,16 +128,15 @@ const OrderRow = ({ order, getOrders }) => {
 				{/*<TableCell>{order.oplata ? 'Да' : 'Нет'}</TableCell>*/}
 					{order.status === 0 ? (
 						<TableCell>
-						<IconButton  variant="outlined" color="warning" onClick={() => statusFunc(order.id)}>
-							<CheckCircle color="warning" size={20} />
-						</IconButton>
+						<Button  variant="contained" color="secondary" onClick={() => statusFunc(order.id)}>
+							<Check sx={{color: '#b6b6b6'}} size={20} />
+						</Button>
 						</TableCell>
 					) :
-
 						<TableCell>
-							<IconButton  variant="outlined" color="warning" onClick={() => statusFunc(order.id)}>
-								<CheckCircle color="success" size={20} />
-							</IconButton>
+							<Button  variant="contained" color="secondary" onClick={() => statusFunc(order.id)}>
+								<Check color="success" size={20} />
+							</Button>
 						</TableCell>
 					}
 
@@ -153,8 +151,8 @@ const OrderRow = ({ order, getOrders }) => {
 								<Box sx={{ mb: 2, p: 2, border: "1px solid gray", borderRadius: 2 }}>
 									<Typography variant="h6">Оплата</Typography>
 									{/*<Typography>Сумма: ${order.payment.summa}</Typography>*/}
-									<Typography>PDate: {formatDate(order.payment.date)}</Typography>
-									<Typography>BDate: {formatDate(order.payment.dateCheck)}</Typography>
+									<Typography>PDate: {order.payment.dateSubmit && formatDate(order.payment.dateSubmit)}</Typography>
+									<Typography>BDate: {order.payment.dateCheck && formatDate(order.payment.dateCheck)}</Typography>
 									{/*<Typography>Статус: {order.payment.status === 1 ? "Оплачено" : "Не оплачено"}</Typography>*/}
 									<Typography>TID: {order.payment.trid }</Typography>
 								</Box>
