@@ -33,8 +33,9 @@ const rout = [
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const theme = getTheme(darkMode);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(import.meta.env.MODE === 'development' );
   const [password, setPassword] = useState('');
+
 
   // Проверяем localStorage при загрузке
   // useEffect(() => {

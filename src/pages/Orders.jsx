@@ -18,6 +18,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Check } from "@mui/icons-material";
 import { CircularProgress, IconButton } from "@mui/material";
 import {formatDate} from "../component/dateF.js";
+import useNewCountStore from "../store/count.js";
 
 
 const url = import.meta.env.VITE_IMG;
@@ -26,6 +27,8 @@ const Orders = () => {
 	const [orders, setOrders] = useState([]);
 	const [ordersStatus0, setOrdersStatus0] = useState([]);
 	const [ordersStatus1, setOrdersStatus1] = useState([]);
+
+
 
 	const getOrders = () => {
 		getOrdersAPI().then((data) => {
@@ -36,9 +39,11 @@ const Orders = () => {
 		});
 	};
 
+	const { newCount } = useNewCountStore();
+
 	useEffect(() => {
 		getOrders();
-	}, []);
+	}, [newCount]);
 
 	return (
 		<Box p={4}>
@@ -104,9 +109,13 @@ const Orders = () => {
 
 const OrderRow = ({ order, getOrders }) => {
 	const [open, setOpen] = useState(false);
+
+	const { fetchNewCount } = useNewCountStore();
+
 	const statusFunc = (id) => {
 		getOrderStatusAPI(id).then(() => {
 			getOrders(); // Обновляем заказы после изменения статуса
+			fetchNewCount()
 		});
 	};
 

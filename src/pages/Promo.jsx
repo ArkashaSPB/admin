@@ -56,6 +56,7 @@ const Promo = () => {
 		addPromoAPI(promoData).then(data => {
 			if(data.success){
 				toast.success(data.message);
+				getFunc();
 			}else{
 				toast.error(data.message);
 			}

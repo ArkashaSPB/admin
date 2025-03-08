@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
 	DarkMode,
-	Dashboard,
 	LightMode,
 	Person2,
 	Menu as MenuIcon,
@@ -11,9 +10,8 @@ import {
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // <== правильный импорт
 
 import {
-	AppBar,
+	AppBar, Badge,
 	Box,
-	Button,
 	Drawer,
 	IconButton,
 	ListItemIcon,
@@ -25,6 +23,7 @@ import {
 } from "@mui/material";
 import {Link, NavLink} from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import useNewCountStore from "../store/count.js";
 
 
 const menuItem = [
@@ -42,13 +41,15 @@ const menuItem = [
 const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 
 	const location = useLocation(); // Получаем текущий путь
-	console.log(location);
-
 	const [openMenu, setOpenMenu] = useState(true);
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // определение мобильного устройства
+
+	const { newCount } = useNewCountStore();
 	const toggleTheme = () => {
 		setDarkMode((prevMode) => !prevMode);
 	};
+
+
 
 	useEffect(() => {
 		setOpenMenu(!isMobile);
@@ -71,9 +72,9 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 							<Box sx={{ display: "flex", alignItems: "center" }}>
 
 							</Box>
-							<IconButton color="inherit" onClick={toggleTheme}>
-								{darkMode ? <LightMode /> : <DarkMode />}
-							</IconButton>
+							{/*<IconButton color="inherit" onClick={toggleTheme}>*/}
+							{/*	{darkMode ? <LightMode /> : <DarkMode />}*/}
+							{/*</IconButton>*/}
 						</Box>
 					</Toolbar>
 				</AppBar>
@@ -103,9 +104,16 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 										"&:hover": {
 											backgroundColor: "#e0e0e0",
 										},
+										py:1.5
 									}}
 								>
-									<ListItemIcon>{item.icon}</ListItemIcon>
+									<ListItemIcon>
+										{item.name === 'Заказы' && newCount > 0 ?
+										<Badge badgeContent={newCount} color="success">
+											{item.icon}
+										</Badge>
+											: item.icon}
+									</ListItemIcon>
 									<ListItemText
 										sx={{
 											display: openMenu ? "block" : "none",
@@ -169,7 +177,13 @@ const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
 								color: location.pathname === item.path ? "#000" : "inherit",
 							}}
 						>
-							<Box sx={{ marginRight: 2 }}>{item.icon}</Box>
+							<Box sx={{ marginRight: 2 }}>
+								{item.name === 'Заказы' && newCount > 0 ?
+									<Badge badgeContent={newCount} color="success">
+										{item.icon}
+									</Badge>
+									: item.icon}
+							</Box>
 							{item.name}
 						</NavLink>
 					))}

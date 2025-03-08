@@ -104,6 +104,12 @@ export const getOrdersAPI = async () => {
 	return data
 }
 
+
+export const getCountNewAPI = async () => {
+	const {data} = await $host.get(`goods/order/new`)
+	return data
+}
+
 export const getOrderStatusAPI = async (id) => {
 	const {data} = await $host.patch(`goods/order/status/`+id)
 	return data
