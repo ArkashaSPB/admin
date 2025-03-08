@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {addPromoAPI, getGoodsAPI} from '../api/siteAPI.js';
+import {addPromoAPI, getAllPromoAPI, getGoodsAPI} from '../api/siteAPI.js';
 import {
 	TextField, Button, MenuItem, Select, FormControl, InputLabel, Box, Typography
 } from '@mui/material';
@@ -14,6 +14,9 @@ const Promo = () => {
 	const [promoName, setPromoName] = useState(''); // Название промокода
 	const [selectedProducts, setSelectedProducts] = useState([]); // Выбранные товары с ценами
 	// Функция загрузки товаров с API
+
+	const [promo, setPromo] = useState([])
+
 	const getFunc = async () => {
 		try {
 			const data = await getGoodsAPI();
@@ -23,8 +26,16 @@ const Promo = () => {
 		}
 	};
 
+	const getFuncPromo = () => {
+		getAllPromoAPI().then((data) => {
+			setPromo(data);
+		});
+	};
+
+
 	useEffect(() => {
 		getFunc();
+		getFuncPromo();
 	}, []);
 
 	// Добавление нового товара в список
@@ -56,12 +67,12 @@ const Promo = () => {
 		addPromoAPI(promoData).then(data => {
 			if(data.success){
 				toast.success(data.message);
-				getFunc();
+				getFuncPromo()
 			}else{
 				toast.error(data.message);
 			}
 		})
-		console.log('Созданный промокод:', promoData);
+		// console.log('Созданный промокод:', data);
 	};
 
 	// Фильтрация товаров: исключаем уже выбранные
@@ -135,7 +146,7 @@ const Promo = () => {
 			<Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
 				Создать промокод
 			</Button>
-			<AllPromo/>
+			<AllPromo getFunc={getFuncPromo} promo={promo} />
 		</Box>
 	);
 };

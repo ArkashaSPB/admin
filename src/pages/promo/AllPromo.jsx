@@ -5,18 +5,7 @@ import {toast} from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 
-const AllPromo = () => {
-	const [promo, setPromo] = useState([]);
-
-	const getFunc = () => {
-		getAllPromoAPI().then((data) => {
-			setPromo(data);
-		});
-	};
-
-	useEffect(() => {
-		getFunc();
-	}, []);
+const AllPromo = ({getFunc, promo}) => {
 
 	const deletePromo =  (id) => {
 		delPromoAPI(id).then((data) => {
