@@ -360,12 +360,12 @@ const Goods = () => {
 			</Box>
 
 			{countryView ?
-					<Country open={countryView} setOpen={setCountryView} country = {country} getFunc={getCountryFunc}/>
+					<Country open={countryView} setOpen={setCountryView} country = {country} getFunc={getCountryFunc} getGoods={getFunc} />
 				: null
 			}
 
 			{categoryView ?
-				<CategoryModal open={categoryView} setOpen={setCategoryView} category = {category} getFunc={getCategoryFunc}/>
+				<CategoryModal open={categoryView} setOpen={setCategoryView} category = {category} getFunc={getCategoryFunc} getGoods={getFunc}/>
 				: null
 			}
 

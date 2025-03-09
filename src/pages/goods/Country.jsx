@@ -21,7 +21,7 @@ import UploadImg from "../../component/UploadImg.jsx";
 const url =  import.meta.env.VITE_IMG;
 
 
-const Country = ({open, setOpen, country,  getFunc}) => {
+const Country = ({open, setOpen, country,  getFunc, getGoods}) => {
 	const [massive, setMassive] = useState([])
 	const [editId, setEditId] = useState(null)
 
@@ -75,6 +75,7 @@ const Country = ({open, setOpen, country,  getFunc}) => {
 			toast.success(data)
 			setEditId(null)
 			setMassiveEdit({name: '', kod: ''})
+			getGoods()
 		}).catch(()=>{
 			toast.error("Ошибка в изменении")
 		})

@@ -26,7 +26,7 @@ import UploadImg from "../../component/UploadImg.jsx";
 const url =  import.meta.env.VITE_IMG;
 
 
-const CategoryModal = ({open, setOpen, category,  getFunc}) => {
+const CategoryModal = ({open, setOpen, category,  getFunc, getGoods}) => {
 	const [massive, setMassive] = useState([])
 	const [editId, setEditId] = useState(null)
 	const [massiveEdit, setMassiveEdit] = useState(null)
@@ -50,6 +50,7 @@ const CategoryModal = ({open, setOpen, category,  getFunc}) => {
 		deleteCategoryAPI(id).then(data => {
 			getFunc()
 			toast.success(data)
+			getGoods()
 		}).catch(data => {
 			toast.error(data)
 		})
@@ -76,6 +77,7 @@ const CategoryModal = ({open, setOpen, category,  getFunc}) => {
 			toast.success(data)
 			setEditId(null)
 			setMassiveEdit({name: '', kod: ''})
+			getGoods()
 		}).catch(()=>{
 			toast.error("Ошибка в изменении")
 		})
@@ -153,7 +155,7 @@ const CategoryModal = ({open, setOpen, category,  getFunc}) => {
 											:
 											<IconButton  onClick={() => {
 												setEditId(row.id)
-												setMassiveEdit({name: row.name, kod: row.kod})
+												setMassiveEdit({name: row.name, kod: row.kod, img: row.img})
 											}}
 											>
 												<EditIcon color="warning" />
