@@ -180,6 +180,44 @@ export const editMailAPI = async (id, mas) => {
 	return data
 }
 
+//работа с json
+export const getAllLangAPI = async () => {
+	const {data} = await $host.get(`lang`)
+	return data
+}
+
+
+export const addLangAPI = async (massive) => {
+	const {data} = await $host.post(`lang`, massive)
+	return data
+}
+
+export const delLangAPI = async (id) => {
+	const {data} = await $host.delete(`lang/`+id)
+	return data
+}
+
+export const addColumnLangAPI = async (massive) => {
+	const {data} = await $host.post(`lang/column`, massive)
+	return data
+}
+
+export const delColumnLangAPI = async (name) => {
+	const {data} = await $host.delete(`lang/column/${name}`)
+	return data
+}
+
+export const editLangAPI = async (id, massive) => {
+	const {data} = await $host.put(`lang/data/${id}`, massive)
+	return data
+}
+
+
+
+
+
+
+
 
 
 

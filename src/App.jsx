@@ -16,6 +16,7 @@ import OplataHistory from "./pages/OplataHistory.jsx";
 import Promo from "./pages/Promo.jsx";
 import Email from "./pages/Email.jsx";
 import Logs from "./pages/Logs.jsx";
+import Lang from "./pages/Lang.jsx";
 
 const rout = [
   { path: '/', element: <Main/> },
@@ -28,6 +29,7 @@ const rout = [
   { path: '/promo', element: <Promo /> },
   { path: '/email', element: <Email /> },
   { path: '/logs', element: <Logs /> },
+  { path: '/lang', element: <Lang /> },
 ];
 
 function App() {

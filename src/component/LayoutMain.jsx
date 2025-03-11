@@ -4,7 +4,7 @@ import {
 	LightMode,
 	Person2,
 	Menu as MenuIcon,
-	MenuOpen,
+	MenuOpen, Language,
 	Shop, ShoppingCart, HistoryRounded, Mail, CurrencyBitcoin, Settings, History, Storage
 } from "@mui/icons-material";
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // <== правильный импорт
@@ -36,6 +36,7 @@ const menuItem = [
 	{name: "Клиенты", icon: <Person2/>, path: '/users'},
 	{name: "Трон история", icon: <HistoryRounded/>, path: '/tron'},
 	{name: "История сайта", icon: <Storage/>, path: '/logs'},
+	{name: "Язык", icon: <Language/>, path: '/lang'},
 ]
 
 const LayoutMain = ({children, darkMode, setDarkMode, theme}) => {
