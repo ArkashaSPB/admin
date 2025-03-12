@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Modal, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
-import { getAllMailAPI, getMailAPI, editMailAPI } from "../api/siteAPI.js"; // Фейковые API
+import { getAllMailAPI, getMailAPI, editMailAPI } from "../api/siteAPI.js";
+import ModalEmail from "./email/ModalEmail.jsx";
+import LangEmail from "./email/LangEmail.jsx"; // Фейковые API
 
 const Email = () => {
 	const [emails, setEmails] = useState([]); // Список писем
@@ -37,18 +39,12 @@ const Email = () => {
 	};
 
 	// 📝 Изменение полей письма
-	const handleChange = (field, value) => {
-		setSelectedEmail((prev) => ({ ...prev, [field]: value }));
-	};
+
 
 	// 💾 Сохранение письма
 	const handleSave = async () => {
 		try {
-			await editMailAPI(selectedEmail.id, {
-				name: selectedEmail.name,
-				subject: selectedEmail.subject,
-				text: selectedEmail.text, // HTML-содержимое
-			});
+			await editMailAPI(selectedEmail.id, {selectedEmail});
 			setOpen(false);
 			fetchEmails(); // Обновляем список после редактирования
 		} catch (error) {
@@ -58,6 +54,8 @@ const Email = () => {
 
 	return (
 		<Box sx={{ padding: 3 }}>
+
+
 			<Typography variant="h4" sx={{ mb: 2 }}>
 				Шаблоны письма
 			</Typography>
@@ -90,69 +88,14 @@ const Email = () => {
 				</Table>
 			</TableContainer>
 
-			{/* ✏️ Модальное окно для редактирования */}
-			<Modal open={open} onClose={() => setOpen(false)}>
-				<Box
-					sx={{
-						position: "absolute",
-						top: "50%",
-						left: "50%",
-						transform: "translate(-50%, -50%)",
-						width: "600px",
-						bgcolor: "background.paper",
-						boxShadow: 24,
-						p: 4,
-						borderRadius: 2,
-					}}
-				>
-					<Typography variant="h6" sx={{ mb: 2 }}>
-						Редактирование письма
-					</Typography>
+			<h2>Языки</h2>
 
-					<TextField
-						fullWidth
-						label="Название"
-						variant="outlined"
-						sx={{ mb: 2 }}
-						value={selectedEmail?.name || ""}
-						onChange={(e) => handleChange("name", e.target.value)}
-					/>
+			<LangEmail/>
 
-					<TextField
-						fullWidth
-						label="Тема"
-						variant="outlined"
-						sx={{ mb: 2 }}
-						value={selectedEmail?.subject || ""}
-						onChange={(e) => handleChange("subject", e.target.value)}
-					/>
-
-					{/* 🔥 ReactQuill для HTML-редактирования текста письма */}
-					<Typography variant="subtitle1">Текст письма:</Typography>
-
-					<TextField
-						label="Текст письма"
-						multiline
-						rows={6} // Количество строк
-						fullWidth
-						variant="outlined"
-						value={selectedEmail?.text || ""}
-						onChange={(e) => handleChange("text", e.target.value)}
-						sx={{ mt: 2 }}
-					/>
-
-
-					{/* Кнопки */}
-					<Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-						<Button variant="outlined" onClick={() => setOpen(false)}>
-							Закрыть
-						</Button>
-						<Button variant="contained" color="primary" onClick={handleSave} disabled={loading}>
-							{loading ? "Сохранение..." : "Сохранить"}
-						</Button>
-					</Box>
-				</Box>
-			</Modal>
+			<ModalEmail	open={open} setOpen={setOpen}
+									 selectedEmail={selectedEmail} setSelectedEmail={setSelectedEmail}
+									 handleSave={handleSave}
+			></ModalEmail>
 		</Box>
 	);
 };

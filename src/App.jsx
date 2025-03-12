@@ -39,14 +39,6 @@ function App() {
   const [password, setPassword] = useState('');
 
 
-  // Проверяем localStorage при загрузке
-  // useEffect(() => {
-  //   const adminStatus = localStorage.getItem("admin");
-  //   if (adminStatus === "1") {
-  //     setIsAdmin(true);
-  //   }
-  // }, []);
-
 
 
   useEffect(() => {

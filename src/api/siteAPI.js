@@ -180,6 +180,24 @@ export const editMailAPI = async (id, mas) => {
 	return data
 }
 
+
+export const getAllMailLangAPI = async () => {
+	const {data} = await $host.get(`mail/column`)
+	return data
+}
+
+export const addMailLangAPI = async (lang) => {
+	const {data} = await $host.post(`mail/column`, lang)
+	return data
+}
+
+export const delMailLangAPI = async (lang) => {
+	const {data} = await $host.delete(`mail/column/`+ lang )
+	return data
+}
+
+
+
 //работа с json
 export const getAllLangAPI = async () => {
 	const {data} = await $host.get(`lang`)
